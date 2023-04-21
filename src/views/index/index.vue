@@ -39,15 +39,13 @@
                     </a-sub-menu>
                     <a-sub-menu key="1">
                         <template #icon><icon-apps></icon-apps></template>
-                        <template #title>数据可视化</template>
-                        <a-menu-item key="1_0">分析页</a-menu-item>
-                        <a-menu-item key="1_1">多维数据分析</a-menu-item>
+                        <template #title>监测</template>
+                        <a-menu-item key="1_0">监视节点状态</a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="2">
                         <template #icon><icon-apps></icon-apps></template>
-                        <template #title>个人中心</template>
-                        <a-menu-item key="2_0">用户信息</a-menu-item>
-                        <a-menu-item key="2_1">用户设置</a-menu-item>
+                        <template #title>案例</template>
+                        <a-menu-item key="2_0">案例添加</a-menu-item>
                     </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
@@ -71,6 +69,11 @@
     </a-layout>
 </template>
 <script setup lang="ts">
+import { commandsStore } from '@/stores/index'
+
+const useCommandsStore = commandsStore()
+const { refresh12Status, refresh15Status, refresh16Status } = useCommandsStore
+
 const router = useRouter()
 
 const collapsed = ref(false)
@@ -84,11 +87,9 @@ const To = (key: string) => {
     if (key === '0_0') {
         router.push('/main')
     } else if (key === '1_0') {
-        router.push('/data/analyse')
+        router.push('/watch')
     } else if (key === '2_0') {
-        router.push('/personal/info')
-    } else if (key === '2_1') {
-        router.push('/personal/setting')
+        router.push('/control')
     }
 }
 
@@ -111,7 +112,7 @@ const toBrumbPage = (paths: string | any[]) => {
     router.push('/' + paths[paths.length - 1])
 }
 
-onMounted(() => {
+onMounted(async () => {
     const newArr: any = []
     router.currentRoute.value.matched.forEach((item) => {
         const list = Object.entries(item).filter(([key]) =>
@@ -121,6 +122,9 @@ onMounted(() => {
         newArr.push(newItem)
     })
     routesList.value = newArr
+    await refresh12Status()
+    await refresh15Status()
+    await refresh16Status()
 })
 
 const changeColor = () => {

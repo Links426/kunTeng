@@ -6,7 +6,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import { presetUno, presetAttributify } from 'unocss'
 import path from 'path'
-const resolve = (dir) => path.resolve(__dirname, dir)
+const resolve = (dir: string) => path.resolve(__dirname, dir)
 
 // https://vitejs.dev/config/
 export default defineConfig({

@@ -1,3 +1,4 @@
+import { Message } from '@arco-design/web-vue'
 import type { AxiosError, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
@@ -36,6 +37,12 @@ service.interceptors.response.use(
         // 对响应数据做点什么
         NProgress.configure({ showSpinner: false })
         NProgress.done()
+        Message.success({
+            id: 'myInfo',
+            content: `${response},请求成功！`,
+            duration: 2000,
+        })
+
         console.log(response.data)
 
         return Promise.resolve(response.data)
@@ -44,6 +51,11 @@ service.interceptors.response.use(
         // 对响应错误做点什么
         NProgress.configure({ showSpinner: false })
         NProgress.done()
+        Message.error({
+            id: 'myInfo',
+            content: `${error}，请重试`,
+            duration: 2000,
+        })
         return Promise.reject(error)
     }
 )
