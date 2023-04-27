@@ -40,6 +40,17 @@ const routes = [
                     isIframe: false,
                 },
             },
+            {
+                path: '/launch',
+                name: '启动',
+                component: () => import('@/views/launch/launch.vue'),
+                meta: {
+                    label: '一键启动',
+                    openKeys: ['3'],
+                    selectKeys: ['3_0'],
+                    isIframe: false,
+                },
+            },
         ],
     },
 ]

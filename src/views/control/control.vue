@@ -84,8 +84,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import { get12Diy, get15Diy, get16Diy } from '@/api/diy/diy'
+import { getDiyStatus } from '@/api/diy/diy'
 import { add12Diy, add15Diy, add16Diy, diyData } from '@/api/diy/diy'
+import router from '@/router'
 
 const addProjectName = ref('')
 const addProjectPoint = ref(12)
@@ -93,7 +94,7 @@ const addProjectPoint = ref(12)
 const addDiyData = ref<diyData>({
     commands: {
         cmd: '',
-        isshell: '',
+        isshell: 'false',
     },
     excom: '',
     workdir: '',
@@ -101,7 +102,7 @@ const addDiyData = ref<diyData>({
 
 const delDiyData = ref({})
 const delDiyPoint = ref(12)
-const delDiyProcessList = ref()
+const delDiyProcessList = ref({})
 const delDiyProcessSel = ref()
 
 onMounted(() => {
@@ -125,6 +126,7 @@ const handleAddCommands = async () => {
     } else if (addProjectPoint.value == 16) {
         await add16Diy(command)
     }
+    router.go(0)
 }
 
 const handleDelCommands = async () => {
@@ -143,20 +145,15 @@ const handleDelCommands = async () => {
     } else if (delDiyPoint.value == 16) {
         await add16Diy(command)
     }
+    router.go(0)
 }
 
 const getCurrentProcess = async () => {
-    if (delDiyPoint.value == 15) {
-        const { body } = await get15Diy()
-        delDiyProcessList.value = body.data
-    } else if (delDiyPoint.value == 12) {
-        const { body } = await get12Diy()
-        delDiyProcessList.value = body.data
-    } else if (delDiyPoint.value == 16) {
-        const { body } = await get16Diy()
+    delDiyProcessList.value = {}
+    const body = await getDiyStatus(delDiyPoint.value)
+    if (typeof body !== 'undefined') {
         delDiyProcessList.value = body.data
     }
-    console.log(delDiyProcessList.value)
 }
 </script>
 

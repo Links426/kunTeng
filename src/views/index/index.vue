@@ -47,6 +47,11 @@
                         <template #title>案例</template>
                         <a-menu-item key="2_0">案例添加</a-menu-item>
                     </a-sub-menu>
+                    <a-sub-menu key="3">
+                        <template #icon><icon-apps></icon-apps></template>
+                        <template #title>一键启动台</template>
+                        <a-menu-item key="3_0">启动台</a-menu-item>
+                    </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
             <a-layout-content class="w-full p-20px content-bg">
@@ -90,6 +95,8 @@ const To = (key: string) => {
         router.push('/watch')
     } else if (key === '2_0') {
         router.push('/control')
+    } else if (key === '3_0') {
+        router.push('/launch')
     }
 }
 

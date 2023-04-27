@@ -74,7 +74,7 @@ import {
     start16Commands,
     stop15Commands,
 } from '@/api/control/control'
-import { get12Diy, get15Diy, get16Diy } from '@/api/diy/diy'
+import { get12Diy, get15Diy, get16Diy, getDiyStatus } from '@/api/diy/diy'
 import { commandsStore } from '@/stores/index'
 import {
     get12ParamsStatus,
@@ -108,26 +108,37 @@ const pointList = ref([
     },
 ])
 
+interface Command {
+    point: number
+    control: {
+        commands: {
+            cmd: string
+            isshell: boolean
+        }
+        excom: string
+    }
+}
+
 const launchProject = async (name: string, point: number) => {
-    let command = {
+    let command: Command = {
         point: 0,
         control: { commands: { cmd: '', isshell: false }, excom: '' },
     }
-    if (point === 12) {
-        const { body } = await get12Diy()
-        command.control = body.data[name]
-        command.point = point
-        start12Commands(optionModal(command.control.commands.isshell, name))
-    } else if (point === 15) {
-        const { body } = await get15Diy()
-        command.control = body.data[name]
-        command.point = point
-        start15Commands(optionModal(command.control.commands.isshell, name))
-    } else if (point === 16) {
-        const { body } = await get16Diy()
-        command.control = body.data[name]
-        command.point = point
-        start16Commands(optionModal(command.control.commands.isshell, name))
+    const body = await getDiyStatus(point) // 这个函数根据point的值返回不同的数据
+    command.control = body!.data[name]
+    command.point = point
+    switch (point) {
+        case 12:
+            start12Commands(optionModal(command.control.commands.isshell, name))
+            break
+        case 15:
+            start15Commands(optionModal(command.control.commands.isshell, name))
+            break
+        case 16:
+            start16Commands(optionModal(command.control.commands.isshell, name))
+            break
+        default:
+            console.log('Invalid point value')
     }
 }
 
