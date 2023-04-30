@@ -8,25 +8,25 @@
                         v-model="addProjectName"
                     ></a-input>
                 </a-form-item>
-                <a-form-item label="excom">
+                <a-form-item label="退出进程名">
                     <a-input
                         placeholder="请输入excom"
                         v-model="addDiyData.excom"
                     ></a-input>
                 </a-form-item>
-                <a-form-item label="workdir">
+                <a-form-item label="目录">
                     <a-input
                         placeholder="请输入workdir"
                         v-model="addDiyData.workdir"
                     ></a-input>
                 </a-form-item>
-                <a-form-item label="cmd">
+                <a-form-item label="文件">
                     <a-input
                         placeholder="请输入cmd"
                         v-model="addDiyData.commands.cmd"
                     ></a-input>
                 </a-form-item>
-                <a-form-item label="isshell">
+                <a-form-item label="是否可控">
                     <a-select
                         v-model="addDiyData.commands.isshell"
                         placeholder="请选择isshell"
@@ -96,7 +96,7 @@ const addDiyData = ref<diyData>({
         cmd: '',
         isshell: 'false',
     },
-    excom: '',
+    excom: 'taskkill /f /im',
     workdir: '',
 })
 

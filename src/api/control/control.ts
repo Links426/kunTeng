@@ -38,5 +38,3 @@ export const stop15Commands = async (process_id: string, token = '1') => {
 export const stop16Commands = async (process_id: string, token = '1') => {
     return await http.post('/stop16', { process_id, token })
 }
-
-

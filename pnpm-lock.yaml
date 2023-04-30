@@ -7,6 +7,7 @@ specifiers:
   '@vitejs/plugin-vue': ^4.0.0
   axios: 0.21.1
   echarts: ^5.4.2
+  monaco-editor: ^0.37.1
   normalize.css: ^8.0.1
   nprogress: ^0.2.0
   pinia: ^2.0.32
@@ -24,6 +25,7 @@ dependencies:
   '@types/nprogress': 0.2.0
   axios: 0.21.1
   echarts: 5.4.2
+  monaco-editor: 0.37.1
   normalize.css: 8.0.1
   nprogress: 0.2.0
   pinia: 2.0.32_hmuptsblhheur2tugfgucj7gc4
@@ -1146,6 +1148,10 @@ packages:
       pkg-types: 1.0.2
       ufo: 1.1.1
     dev: true
+
+  /monaco-editor/0.37.1:
+    resolution: {integrity: sha512-jLXEEYSbqMkT/FuJLBZAVWGuhIb4JNwHE9kPTorAVmsdZ4UzHAfgWxLsVtD7pLRFaOwYPhNG9nUCpmFL1t/dIg==}
+    dev: false
 
   /mrmime/1.0.1:
     resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==, registry: http://registry.npm.taobao.org/, tarball: http://registry.npm.taobao.org/mrmime/-/mrmime-1.0.1.tgz}

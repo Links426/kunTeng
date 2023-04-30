@@ -52,6 +52,11 @@
                         <template #title>一键启动台</template>
                         <a-menu-item key="3_0">启动台</a-menu-item>
                     </a-sub-menu>
+                    <a-sub-menu key="4">
+                        <template #icon><icon-apps></icon-apps></template>
+                        <template #title>编辑</template>
+                        <a-menu-item key="4_0">代码编辑</a-menu-item>
+                    </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
             <a-layout-content class="w-full p-20px content-bg">
@@ -76,9 +81,6 @@
 <script setup lang="ts">
 import { commandsStore } from '@/stores/index'
 
-const useCommandsStore = commandsStore()
-const { refresh12Status, refresh15Status, refresh16Status } = useCommandsStore
-
 const router = useRouter()
 
 const collapsed = ref(false)
@@ -97,6 +99,8 @@ const To = (key: string) => {
         router.push('/control')
     } else if (key === '3_0') {
         router.push('/launch')
+    } else if (key === '4_0') {
+        router.push('/edit')
     }
 }
 
@@ -129,9 +133,8 @@ onMounted(async () => {
         newArr.push(newItem)
     })
     routesList.value = newArr
-    await refresh12Status()
-    await refresh15Status()
-    await refresh16Status()
+
+    // finalProjectList.value = match(point15Status.value, point16Status.value)
 })
 
 const changeColor = () => {

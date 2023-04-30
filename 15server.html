@@ -19,93 +19,92 @@
 -->
 <html>
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="guacamole.css"/>
-        <title>15服务器</title>
-    </head>
+<head>
+    <link rel="stylesheet" type="text/css" href="guacamole.css" />
+    <title>15服务器</title>
+</head>
 
-    <body>
-    
+<body>
+
     <div style="display: flex">
         <div id="display"></div>
-        
+
     </div>
-        <!-- Display -->
+    <!-- Display -->
 
-        <!-- Guacamole JavaScript API -->
-        <script type="text/javascript"
-            src="guacamole-common-js/all.min.js"></script>
+    <!-- Guacamole JavaScript API -->
+    <script type="text/javascript" src="guacamole-common-js/all.min.js"></script>
 
-        <!-- Init -->
-        <script type="text/javascript"> /* <![CDATA[ */
+    <!-- Init -->
+    <script type="text/javascript"> /* <![CDATA[ */
 
-            // Get display div from document
-            var display = document.getElementById("display");
-            
-
-            // Instantiate client, using an HTTP tunnel for communications.
-           // tunnel
-           // 192.168.6.14:8080/tunnel
-           //  var guac = new Guacamole.Client(
-           //      // new Guacamole.HTTPTunnel("tunnel")
-           //      new Guacamole.HTTPTunnel("tunnel")
-           //  );
+        // Get display div from document
+        var display = document.getElementById("display");
 
 
-           var guac = new Guacamole.Client(
-                new Guacamole.WebSocketTunnel("ws://172.22.56.12:9632/webSocket?height=600&width=800&ip=172.22.56.15&protocol=rdp&port=6400&")
-             );
+        // Instantiate client, using an HTTP tunnel for communications.
+        // tunnel
+        // 192.168.6.14:8080/tunnel
+        //  var guac = new Guacamole.Client(
+        //      // new Guacamole.HTTPTunnel("tunnel")
+        //      new Guacamole.HTTPTunnel("tunnel")
+        //  );
+
+
+        var guac = new Guacamole.Client(
+            new Guacamole.WebSocketTunnel("ws://172.22.56.12:9632/webSocket?height=600&width=800&choice=ue&")
+        );
 
 
 
-      
 
 
-            // Add client to display div
-            display.appendChild(guac.getDisplay().getElement());
-           
 
-            // Error handler
-            guac.onerror = function(error) {
-                alert(error);
-            };
-            
+        // Add client to display div
+        display.appendChild(guac.getDisplay().getElement());
 
-            // Connect
-            guac.connect();
-          
 
-            // Disconnect on close
-            window.onunload = function() {
-                guac.disconnect();
-                
-            }
+        // Error handler
+        guac.onerror = function (error) {
+            alert(error);
+        };
 
-            // Mouse
-            var mouse = new Guacamole.Mouse(guac.getDisplay().getElement());
 
-            mouse.onmousedown =
-            mouse.onmouseup   =
-            mouse.onmousemove = function(mouseState) {
+        // Connect
+        guac.connect();
+
+
+        // Disconnect on close
+        window.onunload = function () {
+            guac.disconnect();
+
+        }
+
+        // Mouse
+        var mouse = new Guacamole.Mouse(guac.getDisplay().getElement());
+
+        mouse.onmousedown =
+            mouse.onmouseup =
+            mouse.onmousemove = function (mouseState) {
                 guac.sendMouseState(mouseState);
             };
 
-            
 
-            // Keyboard
-            var keyboard = new Guacamole.Keyboard(document);
 
-            keyboard.onkeydown = function (keysym) {
-                guac.sendKeyEvent(1, keysym);
-            };
+        // Keyboard
+        var keyboard = new Guacamole.Keyboard(document);
 
-            keyboard.onkeyup = function (keysym) {
-                guac.sendKeyEvent(0, keysym);
-            };
-        
+        keyboard.onkeydown = function (keysym) {
+            guac.sendKeyEvent(1, keysym);
+        };
 
-        /* ]]> */ </script>
+        keyboard.onkeyup = function (keysym) {
+            guac.sendKeyEvent(0, keysym);
+        };
 
-    </body>
+
+        /* ]]> */</script>
+
+</body>
 
 </html>

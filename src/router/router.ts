@@ -51,6 +51,17 @@ const routes = [
                     isIframe: false,
                 },
             },
+            {
+                path: '/edit',
+                name: '编辑',
+                component: () => import('@/views/edit/edit.vue'),
+                meta: {
+                    label: '编辑',
+                    openKeys: ['4'],
+                    selectKeys: ['4_0'],
+                    isIframe: false,
+                },
+            },
         ],
     },
 ]
