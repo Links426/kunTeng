@@ -101,7 +101,6 @@
 <script setup lang="ts">
 import { getDiyStatus } from '@/api/diy/diy'
 import { add12Diy, add15Diy, add16Diy, diyData } from '@/api/diy/diy'
-import router from '@/router'
 
 const addProjectName = ref('')
 const addProjectPoint = ref(12)

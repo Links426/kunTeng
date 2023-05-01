@@ -24,7 +24,6 @@
 <script setup lang="ts">
 import { change16Algorithm, get16Algorithm } from '@/api/project/project'
 import Editor from '@/components/Monaco/Editor.vue'
-import { debounce } from '@/utils/deBounce'
 const code = ref('')
 const selValue = ref()
 const AlgorithmOptions = ref<{ code: string; run_process_name: string }[]>([])

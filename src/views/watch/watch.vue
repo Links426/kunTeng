@@ -1,7 +1,5 @@
 <template>
     <div w-full bg-white flex flex-nowrap>
-        <!-- <iframe id="iframe2" src="12server.html" b-0 w-800px h-600px></iframe> -->
-
         <iframe
             id="iframe2"
             src="15server.html"
