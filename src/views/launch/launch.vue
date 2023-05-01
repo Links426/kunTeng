@@ -38,8 +38,8 @@ const useCommandsStore = commandsStore()
 const { finalExampleList } = storeToRefs(useCommandsStore)
 
 const startCommand = async (item: string) => {
-    const cmd15 = (await search15Action(item)).body.process_names
-    const cmd16 = (await search16Action(item)).body.process_names
+    const cmd15 = (await search15Action(item)).body.process_names || []
+    const cmd16 = (await search16Action(item)).body.process_names || []
 
     for (let cmd of cmd15) {
         start15Commands(optionModal(false, cmd))
@@ -64,6 +64,7 @@ const closeCommand = async (item: string) => {
         const processId = Object.keys(body.current_processes).find(
             (key) => body.current_processes[key].command === cls
         )
+        console.log(processId)
         await stop16Commands(processId!)
     }
 }

@@ -43,6 +43,7 @@ declare module '@vue/runtime-core' {
     AStatistic: typeof import('@arco-design/web-vue')['Statistic']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATable: typeof import('@arco-design/web-vue')['Table']
+    ATextrea: typeof import('@arco-design/web-vue')['Textrea']
     Charts: typeof import('./src/components/charts/index.vue')['default']
     Editor: typeof import('./src/components/Monaco/Editor.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']

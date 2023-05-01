@@ -9,7 +9,7 @@
             class="header-shadow"
             ><div flex-center>
                 <img src="@/assets/img/answer.png" w-20px h-28px mr-12px />
-                <span>Mechanical Pro</span>
+                <span>广州大学 系统流变所控制系统</span>
             </div>
             <div>
                 <a-button @click="changeColor">换色黑</a-button>
@@ -79,8 +79,6 @@
     </a-layout>
 </template>
 <script setup lang="ts">
-import { commandsStore } from '@/stores/index'
-
 const router = useRouter()
 
 const collapsed = ref(false)
@@ -133,8 +131,6 @@ onMounted(async () => {
         newArr.push(newItem)
     })
     routesList.value = newArr
-
-    // finalProjectList.value = match(point15Status.value, point16Status.value)
 })
 
 const changeColor = () => {

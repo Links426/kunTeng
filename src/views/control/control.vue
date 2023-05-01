@@ -35,6 +35,16 @@
                         <a-option>false</a-option>
                     </a-select></a-form-item
                 >
+                <a-form-item label="延迟启动的时间(秒)">
+                    <a-input
+                        v-model="addDiyData.delay.start"
+                        placeholder="启动延迟'"
+                    ></a-input>
+                    <a-input
+                        v-model="addDiyData.delay.end"
+                        placeholder="结束延迟"
+                    ></a-input>
+                </a-form-item>
                 <a-form-item label="选择节点">
                     <a-select
                         v-model="addProjectPoint"
@@ -77,7 +87,12 @@
                     </a-select></a-form-item
                 >
                 <a-form-item>
-                    <a-button @click="handleDelCommands">删除</a-button>
+                    <a-popconfirm
+                        content="确定要删除这个案例吗?"
+                        @ok="handleDelCommands"
+                    >
+                        <a-button>删除</a-button>
+                    </a-popconfirm>
                 </a-form-item>
             </a-form>
         </a-card>
@@ -98,6 +113,10 @@ const addDiyData = ref<diyData>({
     },
     excom: 'taskkill /f /im',
     workdir: '',
+    delay: {
+        start: '',
+        end: '',
+    },
 })
 
 const delDiyData = ref({})
@@ -126,7 +145,7 @@ const handleAddCommands = async () => {
     } else if (addProjectPoint.value == 16) {
         await add16Diy(command)
     }
-    router.go(0)
+    // router.go(0)
 }
 
 const handleDelCommands = async () => {
@@ -145,7 +164,7 @@ const handleDelCommands = async () => {
     } else if (delDiyPoint.value == 16) {
         await add16Diy(command)
     }
-    router.go(0)
+    // router.go(0)
 }
 
 const getCurrentProcess = async () => {

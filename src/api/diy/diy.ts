@@ -6,6 +6,10 @@ export interface diyData {
     }
     excom: string
     workdir: string
+    delay: {
+        start: string
+        end: string
+    }
 }
 interface IDiyStatus {
     body: IDiyBody
