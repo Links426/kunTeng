@@ -62,6 +62,17 @@ const routes = [
                     isIframe: false,
                 },
             },
+            {
+                path: '/diylanch',
+                name: '启动自定义',
+                component: () => import('@/views/diyLanch/diyLanch.vue'),
+                meta: {
+                    label: '启动自定义',
+                    openKeys: ['5'],
+                    selectKeys: ['5_0'],
+                    isIframe: false,
+                },
+            },
         ],
     },
 ]

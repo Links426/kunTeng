@@ -57,6 +57,11 @@
                         <template #title>编辑</template>
                         <a-menu-item key="4_0">代码编辑</a-menu-item>
                     </a-sub-menu>
+                    <a-sub-menu key="5">
+                        <template #icon><icon-apps></icon-apps></template>
+                        <template #title>自定义启动</template>
+                        <a-menu-item key="5_0">启动控制</a-menu-item>
+                    </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
             <a-layout-content class="w-full p-20px content-bg">
@@ -99,6 +104,8 @@ const To = (key: string) => {
         router.push('/launch')
     } else if (key === '4_0') {
         router.push('/edit')
+    }else if (key === '5_0') {
+        router.push('/diyLanch')
     }
 }
 

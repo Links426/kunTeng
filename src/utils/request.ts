@@ -39,7 +39,7 @@ service.interceptors.response.use(
         NProgress.done()
         Message.success({
             id: 'myInfo',
-            content: `${response},请求成功！`,
+            content: `状态码${response.status},请求成功！`,
             duration: 2000,
         })
 

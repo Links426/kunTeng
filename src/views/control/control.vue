@@ -5,30 +5,31 @@
                 <a-form-item label="案例名">
                     <a-input
                         placeholder="请输入案例名"
-                        v-model="addProjectName"
+                        v-model="projectItemName"
                     ></a-input>
                 </a-form-item>
+
                 <a-form-item label="退出进程名">
                     <a-input
                         placeholder="请输入excom"
-                        v-model="addDiyData.excom"
+                        v-model="projectItem.excom"
                     ></a-input>
                 </a-form-item>
                 <a-form-item label="目录">
                     <a-input
                         placeholder="请输入workdir"
-                        v-model="addDiyData.workdir"
+                        v-model="projectItem.workdir"
                     ></a-input>
                 </a-form-item>
                 <a-form-item label="文件">
                     <a-input
                         placeholder="请输入cmd"
-                        v-model="addDiyData.commands.cmd"
+                        v-model="projectItem.commands.cmd"
                     ></a-input>
                 </a-form-item>
                 <a-form-item label="是否可控">
                     <a-select
-                        v-model="addDiyData.commands.isshell"
+                        v-model="projectItem.commands.isshell"
                         placeholder="请选择isshell"
                     >
                         <a-option>true</a-option>
@@ -37,47 +38,52 @@
                 >
                 <a-form-item label="延迟启动的时间(秒)">
                     <a-input
-                        v-model="addDiyData.delay.start"
+                        v-model="projectItem.delay.start"
                         placeholder="启动延迟'"
                     ></a-input>
                     <a-input
-                        v-model="addDiyData.delay.end"
+                        v-model="projectItem.delay.end"
                         placeholder="结束延迟"
                     ></a-input>
                 </a-form-item>
                 <a-form-item label="选择节点">
                     <a-select
-                        v-model="addProjectPoint"
-                        default-value="12"
+                        v-model="addDiyData.key"
+                        default-value="15"
                         placeholder="请选择节点"
                     >
-                        <a-option>12</a-option>
-                        <a-option>15</a-option>
-                        <a-option>16</a-option>
+                        <a-option value="ip1">15</a-option>
+                        <a-option value="ip2">16</a-option>
                     </a-select></a-form-item
                 >
                 <a-form-item>
-                    <a-button @click="handleAddCommands">添加</a-button>
+                    <a-popconfirm
+                        content="确定要添加这个案例吗?"
+                        @ok="handleAddCommands"
+                    >
+                        <a-button>添加</a-button>
+                    </a-popconfirm>
                 </a-form-item>
             </a-form>
         </a-card>
+        {{ delDiyPointSel }}
         <a-card title="自定义删除案例" class="w-50%">
             <a-form :model="delDiyData" layout="vertical">
                 <a-form-item label="选择节点">
                     <a-select
-                        v-model="delDiyPoint"
+                        v-model="delDiyPointSel"
                         placeholder="请选择节点"
-                        @change="getCurrentProcess"
+                        @change="getCurrentProjectList"
                     >
-                        <a-option>12</a-option>
-                        <a-option>15</a-option>
-                        <a-option>16</a-option>
+                        <a-option value="ip1">15</a-option>
+                        <a-option value="ip2">16</a-option>
                     </a-select></a-form-item
                 >
                 <a-form-item label="选择删除的进程">
                     <a-select
                         placeholder="请选择进程"
                         v-model="delDiyProcessSel"
+                        :loading="delProjectListLoading"
                     >
                         <a-option
                             v-for="(option, key) in delDiyProcessList"
@@ -99,13 +105,19 @@
     </div>
 </template>
 <script setup lang="ts">
-import { getDiyStatus } from '@/api/diy/diy'
-import { add12Diy, add15Diy, add16Diy, diyData } from '@/api/diy/diy'
+import { addNewProject, getCommands } from '@/api/newApi'
+import router from '@/router'
 
-const addProjectName = ref('')
-const addProjectPoint = ref(12)
+const addProjectPoint = ref()
 
-const addDiyData = ref<diyData>({
+const addDiyData = ref({
+    action: 'add',
+    key: '',
+    data: {},
+})
+const projectItemName = ref('')
+
+const projectItem = ref({
     commands: {
         cmd: '',
         isshell: 'false',
@@ -118,60 +130,51 @@ const addDiyData = ref<diyData>({
     },
 })
 
-const delDiyData = ref({})
-const delDiyPoint = ref(12)
+const handleAddCommands = () => {
+    addDiyData.value.data[projectItemName.value] = projectItem.value
+    if (!projectItemName.value) {
+        return
+    }
+
+    addNewProject(addDiyData.value).then((res) => {
+        if (res.code === 200) {
+            setTimeout(() => {
+                router.go(0)
+            }, 1000)
+        }
+    })
+}
+
+const getCurrentProjectList = async () => {
+    delProjectListLoading.value = true
+    await getCommands(delDiyPointSel.value).then((res) => {
+        delDiyProcessList.value = res.body.data
+
+        delProjectListLoading.value = false
+    })
+}
+
+const delProjectListLoading = ref(false)
+
+const delDiyPointSel = ref()
+
+const delDiyData = ref({ action: 'del', key: 'ip1', data: {} })
+
 const delDiyProcessList = ref({})
 const delDiyProcessSel = ref()
 
-onMounted(() => {
-    getCurrentProcess()
-})
+const handleDelCommands = () => {
+    delDiyData.value.data[delDiyProcessSel.value] = toRaw(
+        delDiyProcessList.value
+    )[delDiyProcessSel.value]
 
-const handleAddCommands = async () => {
-    const command = {
-        action: 'add',
-        data: {},
-    }
-    command.data[addProjectName.value] = JSON.parse(
-        JSON.stringify(addDiyData.value)
-    )
-
-    console.log(command)
-    if (addProjectPoint.value == 15) {
-        await add15Diy(command)
-    } else if (addProjectPoint.value == 12) {
-        await add12Diy(command)
-    } else if (addProjectPoint.value == 16) {
-        await add16Diy(command)
-    }
-    // router.go(0)
-}
-
-const handleDelCommands = async () => {
-    const command = {
-        action: 'del',
-        data: {},
-    }
-    command.data[delDiyProcessSel.value] = JSON.parse(
-        JSON.stringify(delDiyProcessList.value[delDiyProcessSel.value])
-    )
-    console.log(command)
-    if (delDiyPoint.value == 15) {
-        await add15Diy(command)
-    } else if (delDiyPoint.value == 12) {
-        await add12Diy(command)
-    } else if (delDiyPoint.value == 16) {
-        await add16Diy(command)
-    }
-    // router.go(0)
-}
-
-const getCurrentProcess = async () => {
-    delDiyProcessList.value = {}
-    const body = await getDiyStatus(delDiyPoint.value)
-    if (typeof body !== 'undefined') {
-        delDiyProcessList.value = body.data
-    }
+    addNewProject(toRaw(delDiyData.value)).then((res) => {
+        if (res.code === 200) {
+            setTimeout(() => {
+                router.go(0)
+            }, 1000)
+        }
+    })
 }
 </script>
 
