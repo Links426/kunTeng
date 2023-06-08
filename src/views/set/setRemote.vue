@@ -2,7 +2,7 @@
     <div>
         <a-card title="设置监控画面信息">
             <a-tag bordered color="orange" size="large"
-                >请双开此网页,即同时打开设置窗口和监控窗口.监控窗口无法动态保存,每次都会重新链接</a-tag
+                >操作前请刷新此网页,Gua的特性会导致此页面无法操作</a-tag
             >
             <a-form :model="pointForm" layout="vertical">
                 <a-form-item field="ip" label="IP">
