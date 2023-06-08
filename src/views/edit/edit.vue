@@ -40,7 +40,7 @@ onMounted(async () => {
     AlgorithmOptions.value = (await get16Algorithm()).body.userals
 })
 const submitCode = () => {
-    change16Algorithm(selValue.value, code.value)
+    change16Algorithm(selValue.value, code.value, 'ip2')
 }
 </script>
 
