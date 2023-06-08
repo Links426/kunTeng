@@ -7,8 +7,15 @@ export const commandsStore = defineStore('command', () => {
         ip1: [],
         ip2: [],
     })
+    const watchPointForm = ref({
+        ip: 'ip1',
+        port: '6400',
+        username: 'huangxiaojie',
+        password: 'Aa123456',
+    })
     return {
         finalExampleList,
         commandsLibrary,
+        watchPointForm,
     }
 })

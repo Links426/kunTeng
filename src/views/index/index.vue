@@ -41,6 +41,7 @@
                         <template #icon><icon-apps></icon-apps></template>
                         <template #title>监测</template>
                         <a-menu-item key="1_0">监视节点状态</a-menu-item>
+                        <a-menu-item key="1_1">监视节点设置</a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="2">
                         <template #icon><icon-apps></icon-apps></template>
@@ -61,6 +62,11 @@
                         <template #icon><icon-apps></icon-apps></template>
                         <template #title>自定义启动</template>
                         <a-menu-item key="5_0">启动控制</a-menu-item>
+                    </a-sub-menu>
+                    <a-sub-menu key="6">
+                        <template #icon><icon-apps></icon-apps></template>
+                        <template #title>自定义监控</template>
+                        <a-menu-item key="6_0">监控设置</a-menu-item>
                     </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
@@ -98,14 +104,18 @@ const To = (key: string) => {
         router.push('/main')
     } else if (key === '1_0') {
         router.push('/watch')
+    } else if (key === '1_1') {
+        router.push('/set')
     } else if (key === '2_0') {
         router.push('/control')
     } else if (key === '3_0') {
         router.push('/launch')
     } else if (key === '4_0') {
         router.push('/edit')
-    }else if (key === '5_0') {
+    } else if (key === '5_0') {
         router.push('/diyLanch')
+    } else if (key === '6_0') {
+        router.push('/setRemote')
     }
 }
 

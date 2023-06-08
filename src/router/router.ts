@@ -16,19 +16,7 @@ const routes = [
                     isIframe: false,
                 },
             },
-            {
-                path: '/watch',
-                name: '监视',
 
-                component: () => import('@/views/watch/watch.vue'),
-                meta: {
-                    label: '监视器',
-                    openKeys: ['1'],
-                    selectKeys: ['1_0'],
-                    isIframe: true,
-                },
-                children: [],
-            },
             {
                 path: '/control',
                 name: '控制',
@@ -71,6 +59,25 @@ const routes = [
                     openKeys: ['5'],
                     selectKeys: ['5_0'],
                     isIframe: false,
+                },
+            },
+            {
+                path: '/watch',
+                name: '监视',
+
+                component: () => import('@/views/watch/watch.vue'),
+                meta: {
+                    label: '监视器',
+                    selectKeys: ['1_0'],
+                },
+                children: [],
+            },
+            {
+                path: 'set',
+                component: () => import('@/views/set/setRemote.vue'),
+                meta: {
+                    label: '监视器',
+                    selectKeys: ['1_1'],
                 },
             },
         ],
